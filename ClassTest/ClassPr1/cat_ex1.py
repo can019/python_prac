@@ -3,3 +3,5 @@ class Cat :
         print("야옹")
 cat1 = Cat()
 cat1.meow()
+cat2 = Cat()
+cat2.meow()
