@@ -15,5 +15,5 @@ class Node :
         return self.next
     def setPre(self, pre):
         self.pre = pre
-    def getpre(self):
+    def getPre(self):
         return self.pre
