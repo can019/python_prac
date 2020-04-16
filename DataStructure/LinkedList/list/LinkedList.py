@@ -1,3 +1,13 @@
+#
+# V.0.0.0.1
+# Made By Usung_Jung
+# This code is none copyright code
+# Do not erase this Remark
+# -------------------------------------
+# jys01012@gmail.com
+#
+#
+
 from list.Node import Node
 
 class LinkedList :
