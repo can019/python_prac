@@ -7,8 +7,8 @@
 # jys01012@gmail.com
 #
 #
-
 from list.LinkedList import LinkedList
+
 if __name__ == "__main__":
     print("Initial V0.0.0.1")
     list = LinkedList()
