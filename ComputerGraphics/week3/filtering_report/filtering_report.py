@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import time
-
+import math
 def my_padding(src, filter):
     (h, w) = src.shape
     (h_pad, w_pad) = filter.shape
@@ -22,17 +22,20 @@ def my_filtering(src, filter):
     # filtering 구현                                 #
     # 4중 for문을 이용해 구현할것!                      #
     #################################################
-    """
-    #4중 for문으로 구현해야 시간측정을 할 수 있음(2중 for문으로 구현 시 시간측정이 잘 안됨)
-    for :
-        for :
-            for :
-                for :
-    """
+
+
+    # 4중 for문으로 구현해야 시간측정을 할 수 있음(2중 for문으로 구현 시 시간측정이 잘 안됨)
+    for i in range(h):
+        for j in range(w):
+            sum = 0
+            for n in range(f_h):
+                for m in range(f_w):
+                    sum = sum+ pad_img[i + n, j + m] * filter[n, m]
+            dst[i, j] = sum
 
     return dst
 
-def my_average_filter(src, fshape, verbose=False):
+def my_average_filter(src, fshape, verbose=True):
     (h, w) = src.shape
     if verbose:
         print('average filtering')
@@ -45,7 +48,8 @@ def my_average_filter(src, fshape, verbose=False):
     #꼭 한줄로 작성할 필요 없음
     filter = ???
     """
-
+    filter = np.ones(fshape)
+    filter = filter/np.size(filter)
     if verbose:
         print('<average filter> - shape:', fshape)
         print(filter)
@@ -76,7 +80,13 @@ def my_get_Gaussian_filter(fshape, sigma=1):
     # 어려우면 1차 가우시안 필터 만드는 코드와 2차 가우시안 필터 만드는 코드를 따로따로 구현해도 상관없음
     filter_gaus = ???
     """
-
+    filter_gaus = np.ones(fshape)
+    distance_h = f_h//2
+    distance_w = f_w//2
+    y, x = np.mgrid[-1*distance_h:distance_h+1, -1*distance_w:distance_w+1]
+    filter_gaus = np.exp(-(x * x + y * y) / (2. * sigma * sigma))/(2.*sigma*sigma*math.pi)
+    sum = np.sum(filter_gaus)
+    filter_gaus = filter_gaus/sum
     return filter_gaus
 
 def my_gaussian_filter(src, fshape, sigma=1, verbose=False):
@@ -97,10 +107,10 @@ def my_gaussian_filter(src, fshape, sigma=1, verbose=False):
 if __name__ == '__main__':
     #경로 설정은 알아서...
     src = cv2.imread('../image/baby_SnPnoise.png', cv2.IMREAD_GRAYSCALE).astype(np.float32)
-
+    print(src.shape)
     #사용중인 필터를 확인하고 싶으면 True로 변경, 보기 싫으면 False로 변경
-    verbose = False
-    filter_size = 3
+    verbose = True
+    filter_size = 5
 
     print('<average filter>')
     start = time.perf_counter()  # 시간 측정 시작
