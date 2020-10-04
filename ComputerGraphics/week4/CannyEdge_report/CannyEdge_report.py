@@ -83,14 +83,16 @@ def non_maximum_supression(magnitude, angle):
     # larger_magnitude     : non_maximum_supression 결과(가장 강한 edge만 남김)           #
     ####################################################################################
     (h, w) = magnitude.shape
-    cv2.imshow('before non maximum supression', magnitude/255)
+    cv2.imshow('before non maximum supression', magnitude / 255)
+    magnitude.astype('uint8')
     # angle의 범위 : -90 ~ 90
     larger_magnitude = np.zeros((h, w))
     for row in range(1, h - 1):
         for col in range(1, w - 1):
             degree = angle[row, col]
-
             # gradient의 degree는 edge와 수직방향이다.
+            if col == 304 and row == 89:
+                print()
             if 0 <= degree and degree < 45:
                 rate = np.tan(np.deg2rad(degree))
                 left_magnitude = (rate) * magnitude[row - 1, col - 1] + (1 - rate) * magnitude[row, col - 1]
@@ -99,16 +101,19 @@ def non_maximum_supression(magnitude, angle):
                     larger_magnitude[row, col] = magnitude[row, col]
 
             elif -45 > degree and degree >= -90:
-                rate = 1/np.tan(np.deg2rad(degree))
+                rate = -1/np.tan(np.deg2rad(degree))
                 up_magnitude = (rate) * magnitude[row + 1, col - 1] + (1 - rate) * magnitude[row+1, col]
                 down_magnitude = (rate) * magnitude[row - 1, col + 1] + (1 - rate) * magnitude[row-1, col]
                 if magnitude[row, col] == max(up_magnitude, magnitude[row, col], down_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
             elif -45 <= degree and degree < 0:
-                rate = np.tan(np.deg2rad(degree))
+                rate = -np.tan(np.deg2rad(degree))
                 left_magnitude = (rate) * magnitude[row + 1, col - 1] + (1 - rate) * magnitude[row, col - 1]
                 right_magnitude = (rate) * magnitude[row - 1, col + 1] + (1 - rate) * magnitude[row, col + 1]
+                x = left_magnitude
+                y = magnitude[row, col]
+                z = right_magnitude
                 if magnitude[row, col] == max(left_magnitude, magnitude[row, col], right_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
@@ -117,17 +122,24 @@ def non_maximum_supression(magnitude, angle):
                 up_magnitude = (rate) * magnitude[row -1, col - 1] + (1 - rate) * magnitude[row-1, col]
                 down_magnitude = (rate) * magnitude[row + 1, col + 1] + (1 - rate) * magnitude[row+1, col]
                 if magnitude[row, col] == max(up_magnitude, magnitude[row, col], down_magnitude):
-                    larger_magnitude[row, col] = magnitude[row, col]
+                    x = left_magnitude
+                    y = magnitude[row, col]
+                    z = right_magnitude
+                    larger_magnitude[row, col] = y
+
 
             else:
                 # angle을 np.arctna(Iy/Ix) 로 구했는데 Ix값이 0일 경우 해당 angle은 nan값이 저장됨
                 print(row, col, 'error!  degree :', degree)
 
-    larger_magnitude = (larger_magnitude / np.max(larger_magnitude) * 255).astype(np.uint8)
+    larger_magnitude = (larger_magnitude / np.max(larger_magnitude) * 255).astype('uint8')
+
     cv2.imshow('after non maximum supression', larger_magnitude)
     cv2.waitKey()
     cv2.destroyAllWindows()
     return larger_magnitude
+
+
 
 
 # double_thresholding 수행 high threshold value는 내장함수(otsu방식 이용)를 사용하여 구하고 low threshold값은 (high threshold * 0.4)로 구한다
