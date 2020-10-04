@@ -59,9 +59,7 @@ def calcMagnitude(Ix, Iy):
     # magnitude : ix와 iy의 magnitude         #
     ###########################################
     # Ix와 Iy의 magnitude를 계산
-    print()
-    x = np.square(Ix)
-    y = np.square(Iy)
+
     magnitude = np.sqrt(np.square(Ix)+ np.square(Iy))
     return magnitude
 
@@ -95,29 +93,29 @@ def non_maximum_supression(magnitude, angle):
             # gradient의 degree는 edge와 수직방향이다.
             if 0 <= degree and degree < 45:
                 rate = np.tan(np.deg2rad(degree))
-                left_magnitude = ???
+                left_magnitude = (rate) * magnitude[row - 1, col - 1] + (1 - rate) * magnitude[row, col - 1]
                 right_magnitude = (rate) * magnitude[row + 1, col + 1] + (1 - rate) * magnitude[row, col + 1]
                 if magnitude[row, col] == max(left_magnitude, magnitude[row, col], right_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
             elif -45 > degree and degree >= -90:
-                rate = ???
-                up_magnitude = ???
-                down_magnitude = ???
+                rate = 1/np.tan(np.deg2rad(degree))
+                up_magnitude = (rate) * magnitude[row + 1, col - 1] + (1 - rate) * magnitude[row+1, col]
+                down_magnitude = (rate) * magnitude[row - 1, col + 1] + (1 - rate) * magnitude[row-1, col]
                 if magnitude[row, col] == max(up_magnitude, magnitude[row, col], down_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
             elif -45 <= degree and degree < 0:
-                rate = ???
-                left_magnitude = ???
-                right_magnitude = ???
+                rate = np.tan(np.deg2rad(degree))
+                left_magnitude = (rate) * magnitude[row + 1, col - 1] + (1 - rate) * magnitude[row, col - 1]
+                right_magnitude = (rate) * magnitude[row - 1, col + 1] + (1 - rate) * magnitude[row, col + 1]
                 if magnitude[row, col] == max(left_magnitude, magnitude[row, col], right_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
             elif 90 >= degree and degree >= 45:
-                rate = ???
-                up_magnitude = ???
-                down_magnitude = ???
+                rate = 1/np.tan(np.deg2rad(degree))
+                up_magnitude = (rate) * magnitude[row -1, col - 1] + (1 - rate) * magnitude[row-1, col]
+                down_magnitude = (rate) * magnitude[row + 1, col + 1] + (1 - rate) * magnitude[row+1, col]
                 if magnitude[row, col] == max(up_magnitude, magnitude[row, col], down_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
@@ -127,6 +125,8 @@ def non_maximum_supression(magnitude, angle):
 
     larger_magnitude = (larger_magnitude / np.max(larger_magnitude) * 255).astype(np.uint8)
     cv2.imshow('after non maximum supression', larger_magnitude)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
     return larger_magnitude
 
 
@@ -171,12 +171,12 @@ def my_canny_edge_detection(src, fsize=3, sigma=1, test_mode=False):
         angle = calcAngle(Ix, Iy)
 
         # non-maximum suppression 수행
-        """
+
         larger_magnitude = non_maximum_supression(magnitude, angle)
 
         # double thresholding 수행
         dst = double_thresholding(larger_magnitude, test_mode=test_mode)
-        """
+
     elif test_mode == True:
         dst = double_thresholding(src, test_mode=test_mode)
         cv2.imwrite('double_threshold_test_result.png', dst)
@@ -192,8 +192,9 @@ if __name__ == '__main__':
     src = cv2.imread('./image/Lena.png', cv2.IMREAD_GRAYSCALE)
     print(src)
     dst = my_canny_edge_detection(src)
-
+    """
     cv2.imshow('original', src)
     cv2.imshow('my canny edge detection', dst)
     cv2.waitKey()
     cv2.destroyAllWindows()
+    """
