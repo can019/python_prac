@@ -59,7 +59,10 @@ def calcMagnitude(Ix, Iy):
     # magnitude : ix와 iy의 magnitude         #
     ###########################################
     # Ix와 Iy의 magnitude를 계산
-
+    print()
+    x = np.square(Ix)
+    y = np.square(Iy)
+    magnitude = np.sqrt(np.square(Ix)+ np.square(Iy))
     return magnitude
 
 
@@ -70,7 +73,7 @@ def calcAngle(Ix, Iy):
     # calcAngle 완성                      #
     # angle     : ix와 iy의 angle         #
     #######################################
-
+    angle = np.rad2deg(np.arctan(Iy/Ix))  # arctan값은 radian이므로 이를 변환
     return angle
 
 
@@ -146,6 +149,7 @@ def double_thresholding(src, test_mode=False):
             elif dst[row, col] < low_threshold_value:
                 dst[row, col] = 0
             else:
+                print()
                 ##################################################
                 # TODO                                           #
                 # high 보다는 작고 low보다는 큰 경우                 #
@@ -167,11 +171,12 @@ def my_canny_edge_detection(src, fsize=3, sigma=1, test_mode=False):
         angle = calcAngle(Ix, Iy)
 
         # non-maximum suppression 수행
+        """
         larger_magnitude = non_maximum_supression(magnitude, angle)
 
         # double thresholding 수행
         dst = double_thresholding(larger_magnitude, test_mode=test_mode)
-
+        """
     elif test_mode == True:
         dst = double_thresholding(src, test_mode=test_mode)
         cv2.imwrite('double_threshold_test_result.png', dst)
@@ -184,7 +189,8 @@ if __name__ == '__main__':
     #src = cv2.imread('../image/double_threshold_testImg.png', cv2.IMREAD_GRAYSCALE)
     #dst = my_canny_edge_detection(src, test_mode=True)
 
-    src = cv2.imread('Lena.png', cv2.IMREAD_GRAYSCALE)
+    src = cv2.imread('./image/Lena.png', cv2.IMREAD_GRAYSCALE)
+    print(src)
     dst = my_canny_edge_detection(src)
 
     cv2.imshow('original', src)
