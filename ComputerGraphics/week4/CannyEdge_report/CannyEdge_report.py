@@ -126,8 +126,6 @@ def non_maximum_supression(magnitude, angle):
                     y = magnitude[row, col]
                     z = right_magnitude
                     larger_magnitude[row, col] = y
-
-
             else:
                 # angle을 np.arctna(Iy/Ix) 로 구했는데 Ix값이 0일 경우 해당 angle은 nan값이 저장됨
                 print(row, col, 'error!  degree :', degree)
