@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-
 def my_padding(src, filter):
     (h, w) = src.shape
     (h_pad, w_pad) = filter.shape
@@ -71,6 +70,7 @@ def calcAngle(Ix, Iy):
     # calcAngle 완성                      #
     # angle     : ix와 iy의 angle         #
     #######################################
+
     angle = np.rad2deg(np.arctan(Iy/Ix))  # arctan값은 radian이므로 이를 변환
     return angle
 
@@ -111,9 +111,6 @@ def non_maximum_supression(magnitude, angle):
                 rate = -np.tan(np.deg2rad(degree))
                 left_magnitude = (rate) * magnitude[row + 1, col - 1] + (1 - rate) * magnitude[row, col - 1]
                 right_magnitude = (rate) * magnitude[row - 1, col + 1] + (1 - rate) * magnitude[row, col + 1]
-                x = left_magnitude
-                y = magnitude[row, col]
-                z = right_magnitude
                 if magnitude[row, col] == max(left_magnitude, magnitude[row, col], right_magnitude):
                     larger_magnitude[row, col] = magnitude[row, col]
 
@@ -122,10 +119,7 @@ def non_maximum_supression(magnitude, angle):
                 up_magnitude = (rate) * magnitude[row -1, col - 1] + (1 - rate) * magnitude[row-1, col]
                 down_magnitude = (rate) * magnitude[row + 1, col + 1] + (1 - rate) * magnitude[row+1, col]
                 if magnitude[row, col] == max(up_magnitude, magnitude[row, col], down_magnitude):
-                    x = left_magnitude
-                    y = magnitude[row, col]
-                    z = right_magnitude
-                    larger_magnitude[row, col] = y
+                    larger_magnitude[row, col] = magnitude[row, col]
             else:
                 # angle을 np.arctna(Iy/Ix) 로 구했는데 Ix값이 0일 경우 해당 angle은 nan값이 저장됨
                 print(row, col, 'error!  degree :', degree)
@@ -133,8 +127,6 @@ def non_maximum_supression(magnitude, angle):
     larger_magnitude = (larger_magnitude / np.max(larger_magnitude) * 255).astype('uint8')
 
     cv2.imshow('after non maximum supression', larger_magnitude)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
     return larger_magnitude
 
 
@@ -150,7 +142,8 @@ def double_thresholding(src, test_mode=False):
         print('test mode!! - double threshold function')
         high_threshold_value = 200
     low_threshold_value = high_threshold_value * 0.4
-
+    middle_count = 0;
+    filter = np.ones([3,3])
     dst = src.copy()
     for row in range(h):
         for col in range(w):
@@ -159,12 +152,22 @@ def double_thresholding(src, test_mode=False):
             elif dst[row, col] < low_threshold_value:
                 dst[row, col] = 0
             else:
-                print()
-                ##################################################
-                # TODO                                           #
-                # high 보다는 작고 low보다는 큰 경우                 #
-                ##################################################
-
+                dst[row, col] = 128
+                middle_count = middle_count + 1
+    """
+    (h_pad, w_pad) = filter.shape
+    h_pad = h_pad // 2
+    w_pad = w_pad // 2
+    pad_img = np.ones((h + h_pad * 2, w + w_pad * 2))
+    pad_img[h_pad:h + h_pad, w_pad:w + w_pad] = dst
+    for row in range(1, h+1):
+        for col in range(1, w+1):
+            if pad_img[row, col] == 128:
+                current = pad_img[row-1:row+2, col-1:col+2]
+                if np.where(current == 255).size == 0:
+                    pad_img[row, col] == 0
+                elif
+    """
     return dst
 
 def my_canny_edge_detection(src, fsize=3, sigma=1, test_mode=False):
@@ -200,11 +203,10 @@ if __name__ == '__main__':
     #dst = my_canny_edge_detection(src, test_mode=True)
 
     src = cv2.imread('./image/Lena.png', cv2.IMREAD_GRAYSCALE)
-    print(src)
     dst = my_canny_edge_detection(src)
-    """
+
     cv2.imshow('original', src)
     cv2.imshow('my canny edge detection', dst)
     cv2.waitKey()
     cv2.destroyAllWindows()
-    """
+
