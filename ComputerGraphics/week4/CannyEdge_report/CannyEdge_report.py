@@ -129,7 +129,32 @@ def non_maximum_supression(magnitude, angle):
     cv2.imshow('after non maximum supression', larger_magnitude)
     return larger_magnitude
 
+def middle_value_handler(count, src, h, w, finding):
+    if count == 0:
+        return 0
+    else:
+        target = src[w, h]
+        if target == 128:
+            if np.size(finding) == None: #처음
+                finding = np.empty([0,2])
+                finding = np.append(finding, target, axis=0)
+            target_area = src[w-1:w+2, h-1:h+2]
 
+            src[0, 0]
+            src[0, 1]
+            src[0, 2]
+            src[1, 0]
+            src[1, 1]
+            src[1, 2]
+            src[2, 0]
+            src[2, 1]
+            src[2, 2]
+
+        if h == np.size(src, axis=1)-1:
+            h = 1
+            w = w + 1
+
+        return middle_value_handler()
 
 
 # double_thresholding 수행 high threshold value는 내장함수(otsu방식 이용)를 사용하여 구하고 low threshold값은 (high threshold * 0.4)로 구한다

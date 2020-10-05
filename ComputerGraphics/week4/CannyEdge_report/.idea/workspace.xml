@@ -103,7 +103,7 @@
       <workItem from="1601737188831" duration="294000" />
       <workItem from="1601799261756" duration="12123000" />
       <workItem from="1601811914367" duration="12039000" />
-      <workItem from="1601893681369" duration="112000" />
+      <workItem from="1601893681369" duration="1208000" />
     </task>
     <servers />
   </component>
@@ -165,7 +165,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/CannyEdge_report.py</url>
-          <line>165</line>
+          <line>189</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
