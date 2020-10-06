@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import queue
 def my_padding(src, filter):
     (h, w) = src.shape
     (h_pad, w_pad) = filter.shape
@@ -129,37 +130,16 @@ def non_maximum_supression(magnitude, angle):
     cv2.imshow('after non maximum supression', larger_magnitude)
     return larger_magnitude
 
-def middle_value_handler(count, src, h, w, finding):
-    if count == 0:
-        return 0
-    else:
-        target = src[w, h]
-        if target == 128:
-            if np.size(finding) == None: #처음
-                finding = np.empty([0,2])
-                finding = np.append(finding, target, axis=0)
-            target_area = src[w-1:w+2, h-1:h+2]
-
-            src[0, 0]
-            src[0, 1]
-            src[0, 2]
-            src[1, 0]
-            src[1, 1]
-            src[1, 2]
-            src[2, 0]
-            src[2, 1]
-            src[2, 2]
-
-        if h == np.size(src, axis=1)-1:
-            h = 1
-            w = w + 1
-
-        return middle_value_handler()
-
-
-# double_thresholding 수행 high threshold value는 내장함수(otsu방식 이용)를 사용하여 구하고 low threshold값은 (high threshold * 0.4)로 구한다
 def double_thresholding(src, test_mode=False):
+    #  padding start
     (h, w) = src.shape
+    filter = np.ones([3, 3])
+    (h_pad, w_pad) = filter.shape
+    h_pad = h_pad // 2
+    w_pad = w_pad // 2
+    padding_img = np.ones((h + h_pad * 2, w + w_pad * 2))
+    padding_img[h_pad:h + h_pad, w_pad:w + w_pad] = src
+    #  padding end
     high_threshold_value, _ = cv2.threshold(src, 0, 255, cv2.THRESH_OTSU)
     print('highthreshold')
     print(high_threshold_value)
@@ -168,32 +148,39 @@ def double_thresholding(src, test_mode=False):
         high_threshold_value = 200
     low_threshold_value = high_threshold_value * 0.4
     middle_count = 0;
-    filter = np.ones([3,3])
-    dst = src.copy()
-    for row in range(h):
-        for col in range(w):
+
+    dst = padding_img
+    next = queue.Queue()
+    for row in range(1, h+1):
+        for col in range(1, w+1):
             if dst[row, col] >= high_threshold_value:
                 dst[row, col] = 255
+                next.put(np.array([row, col]))
+                a = look(dst, next)
+                dst = a
             elif dst[row, col] < low_threshold_value:
                 dst[row, col] = 0
             else:
                 dst[row, col] = 128
-                middle_count = middle_count + 1
-    """
-    (h_pad, w_pad) = filter.shape
-    h_pad = h_pad // 2
-    w_pad = w_pad // 2
-    pad_img = np.ones((h + h_pad * 2, w + w_pad * 2))
-    pad_img[h_pad:h + h_pad, w_pad:w + w_pad] = dst
     for row in range(1, h+1):
         for col in range(1, w+1):
-            if pad_img[row, col] == 128:
-                current = pad_img[row-1:row+2, col-1:col+2]
-                if np.where(current == 255).size == 0:
-                    pad_img[row, col] == 0
-                elif
-    """
-    return dst
+            if dst[row, col] ==128:
+                dst[row, col] = 0
+
+    return dst[1:h+1,1:w+1]
+def look(src, next):
+    if(next.qsize()==0):
+        return src
+    coordinate = next.get()
+    h = coordinate[0]
+    w = coordinate[1]
+    area = src[h-1:h+2, w-1:w+2]
+    for i in range(3):
+        for j in range(3):
+            if area[i][j] == 128:
+                src[h+i-1][w+j-1] = 255
+                next.put(np.array([h+i-1, w+j-1]))
+    return look(src, next)
 
 def my_canny_edge_detection(src, fsize=3, sigma=1, test_mode=False):
     if test_mode == False:
@@ -224,7 +211,7 @@ def my_canny_edge_detection(src, fsize=3, sigma=1, test_mode=False):
 
 if __name__ == '__main__':
     #double threshold test
-    #src = cv2.imread('../image/double_threshold_testImg.png', cv2.IMREAD_GRAYSCALE)
+    #src = cv2.imread('./image/double_threshold_testImg.png', cv2.IMREAD_GRAYSCALE)
     #dst = my_canny_edge_detection(src, test_mode=True)
 
     src = cv2.imread('./image/Lena.png', cv2.IMREAD_GRAYSCALE)

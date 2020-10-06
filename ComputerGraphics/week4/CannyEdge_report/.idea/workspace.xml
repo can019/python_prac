@@ -20,6 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="497e2ae4-ee3c-4342-8856-d9a1cee12766" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Test/.idea/Test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ddddd/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CannyEdge_report.py" beforeDir="false" afterPath="$PROJECT_DIR$/CannyEdge_report.py" afterDir="false" />
@@ -51,10 +54,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ddddd" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -103,7 +107,9 @@
       <workItem from="1601737188831" duration="294000" />
       <workItem from="1601799261756" duration="12123000" />
       <workItem from="1601811914367" duration="12039000" />
-      <workItem from="1601893681369" duration="1208000" />
+      <workItem from="1601893681369" duration="28354000" />
+      <workItem from="1601958436905" duration="906000" />
+      <workItem from="1601959731177" duration="2969000" />
     </task>
     <servers />
   </component>
@@ -123,55 +129,48 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1601811707702">
+    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1601960283568">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1601811707702" />
-    <state width="1877" height="352" key="GridCell.Tab.0.bottom" timestamp="1601824674307">
+    <state x="740" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1601960283568" />
+    <state width="1877" height="123" key="GridCell.Tab.0.bottom" timestamp="1601962146241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.0.center" timestamp="1601824674307">
+    <state width="1877" height="123" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601962146241" />
+    <state width="1877" height="123" key="GridCell.Tab.0.center" timestamp="1601962146241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.0.left" timestamp="1601824674307">
+    <state width="1877" height="123" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601962146241" />
+    <state width="1877" height="123" key="GridCell.Tab.0.left" timestamp="1601962146241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.0.right" timestamp="1601824674307">
+    <state width="1877" height="123" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601962146241" />
+    <state width="1877" height="123" key="GridCell.Tab.0.right" timestamp="1601962146241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.1.bottom" timestamp="1601824674307">
+    <state width="1877" height="123" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601962146241" />
+    <state width="1877" height="255" key="GridCell.Tab.1.bottom" timestamp="1601961603954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.1.center" timestamp="1601824674307">
+    <state width="1877" height="255" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601961603954" />
+    <state width="1877" height="255" key="GridCell.Tab.1.center" timestamp="1601961603954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.1.left" timestamp="1601824674307">
+    <state width="1877" height="255" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601961603954" />
+    <state width="1877" height="255" key="GridCell.Tab.1.left" timestamp="1601961603954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-    <state width="1877" height="352" key="GridCell.Tab.1.right" timestamp="1601824674307">
+    <state width="1877" height="255" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601961603954" />
+    <state width="1877" height="255" key="GridCell.Tab.1.right" timestamp="1601961603954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="352" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601824674307" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/CannyEdge_report.py</url>
-          <line>189</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state width="1877" height="255" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601961603954" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1601911606548">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1601911606548" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CannyEdge_report$CannyEdge_report.coverage" NAME="CannyEdge_report Coverage Results" MODIFIED="1601824224720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CannyEdge_report$CannyEdge_report.coverage" NAME="CannyEdge_report Coverage Results" MODIFIED="1601962146238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
