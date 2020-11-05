@@ -2,6 +2,16 @@ import cv2
 import numpy as np
 import random
 
+def L2_distance(vector1, vector2):
+    '''
+    #vector1과 vector2의 거리 구하기 (L2 distance)
+    #distance 는 스칼라
+    #np.sqrt(), np.sum() 를 잘 활용하여 구하기
+    #L2 distance를 구하는 내장함수로 거리를 구한 경우 감점
+    '''
+    distance =
+    return distance
+
 def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = None, iter_num = 500, threshold_distance=10):
 
     sift = cv2.xfeatures2d.SIFT_create(keypoint_num)
@@ -162,16 +172,6 @@ def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = N
 
     return dst
 
-
-def L2_distance(vector1, vector2):
-    '''
-    #vector1과 vector2의 거리 구하기 (L2 distance)
-    #distance 는 스칼라
-    #np.sqrt(), np.sum() 를 잘 활용하여 구하기
-    #L2 distance를 구하는 내장함수로 거리를 구한 경우 감점
-    '''
-    distance =
-    return distance
 
 def main():
     img = cv2.imread('../image/building.jpg')
