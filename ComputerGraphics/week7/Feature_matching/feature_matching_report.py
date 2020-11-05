@@ -37,7 +37,6 @@ def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = N
         y2 = int(np.round(y2))
         points.append([(x1, y1), (x2, y2)])
 
-
     # no RANSAC
     if not RANSAC:
 
@@ -188,11 +187,11 @@ def main():
     dst_no_ransac = feature_matching(img, img_ref, threshold=threshold, keypoint_num=keypoint_num, iter_num=iter_num, threshold_distance=threshold_distance)
     dst_use_ransac = feature_matching(img, img_ref, RANSAC=True, threshold=threshold, keypoint_num=keypoint_num, iter_num=iter_num, threshold_distance=threshold_distance)
 
-    cv2.imshow('No RANSAC' + 학번을 입력하세요, dst_no_ransac)
-    cv2.imshow('Use RANSAC' + 학번을 입력하세요, dst_use_ransac)
+    cv2.imshow('No RANSAC' + '201602068', dst_no_ransac)
+    cv2.imshow('Use RANSAC' + '201602068', dst_use_ransac)
 
-    cv2.imshow('original image' + 학번을 입력하세요, img)
-    cv2.imshow('reference image' + 학번을 입력하세요, img_ref)
+    cv2.imshow('original image' + '201602068', img)
+    cv2.imshow('reference image' + '201602068', img_ref)
     cv2.waitKey()
     cv2.destroyAllWindows()
 
