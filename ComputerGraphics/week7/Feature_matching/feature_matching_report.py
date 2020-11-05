@@ -9,7 +9,7 @@ def L2_distance(vector1, vector2):
     #np.sqrt(), np.sum() 를 잘 활용하여 구하기
     #L2 distance를 구하는 내장함수로 거리를 구한 경우 감점
     '''
-    distance =
+    distance = np.sum(np.sqrt(vector2-vector1))
     return distance
 
 def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = None, iter_num = 500, threshold_distance=10):
