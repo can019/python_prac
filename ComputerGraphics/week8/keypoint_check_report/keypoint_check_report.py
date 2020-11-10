@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 import random
-
+np.seterr(divide='ignore', invalid='ignore')
 def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = None, iter_num = 500, threshold_distance = 10):
     sift = cv2.xfeatures2d.SIFT_create(keypoint_num)
     kp1, des1 = sift.detectAndCompute(img1, None)
@@ -136,9 +136,6 @@ def feature_matching(img1, img2, RANSAC=False, threshold = 300, keypoint_num = N
                     no_ransac_img[row, col] = intensity
                 except:
                     continue
-        cv2.imshow('test',no_ransac_img)
-        cv2.waitKey()
-        cv2.destroyAllWindows()
         dst = no_ransac_img
     # use RANSAAC
     else:
@@ -354,7 +351,7 @@ def scaling_test(src):
     return dst_back_bilinear, M
 
 def main():
-    src = cv2.imread('../image/Lena.png')
+    src = cv2.imread('./Lena.png')
     img = cv2.resize(src, dsize=(0, 0), fx=0.5, fy=0.5)
 
     img_point = img.copy()
@@ -369,7 +366,7 @@ def main():
     ###row_와 col_을 구하기 위해서 ??? 채우기
     ###딱 한 픽셀에만 점을 찍기 위해 소수의 경우 가장 가까운 위치로 변경 ex : (1.9, 1.8)이 row_와 col_으로 나온 경우 row : 2, col : 2로 변경
     '''
-    vec = np.dot(M, ???)
+    vec = np.dot(M, np.array([[160, 160, 1]]).T)
     col_ = int(np.round(vec[0,0]))
     row_ = int(np.round(vec[1,0]))
     dst[row_, col_] = [0, 0, 255]
@@ -382,7 +379,7 @@ def main():
     ###row_와 col_을 구하기 위해서 ??? 채우기
     ###딱 한 픽셀에만 점을 찍기 위해 소수의 경우 가장 가까운 위치로 변경 ex : (1.9, 1.8)이 row_와 col_으로 나온 경우 row : 2, col : 2로 변경
     '''
-    vec = np.dot(M_FM, ???)
+    vec = np.dot(M_FM, np.array([[160, 160, 1]]).T)
     col_ = int(np.round(vec[0,0]))
     row_ = int(np.round(vec[1,0]))
     dst_FM[row_, col_] = [0, 0, 255]
@@ -398,14 +395,14 @@ def main():
     ###row_와 col_을 구하기 위해서 ??? 채우기
     ###딱 한 픽셀에만 점을 찍기 위해 소수의 경우 가장 가까운 위치로 변경 ex : (1.9, 1.8)이 row_와 col_으로 나온 경우 row : 2, col : 2로 변경
     '''
-    vec = np.dot(M_FM_RANSAC, ???)
+    vec = np.dot(M_FM_RANSAC, np.array([[160, 160, 1]]).T)
     col_ = int(np.round(vec[0,0]))
     row_ = int(np.round(vec[1,0]))
     dst_FM_RANSAC[row_, col_] = [0, 0, 255]
 
     print('Use RANSAC distance')
     print('point : ', row_, col_)
-    print(L2_distance(np.array([320,320]), np.array([row_,col_])))
+    print(L2_distance(np.array([320, 320]), np.array([row_,col_])))
 
     print('No RANSAC M')
     print(M_FM)
@@ -414,8 +411,8 @@ def main():
 
     cv2.imshow('img_point', img_point)
     cv2.imshow('dst', dst)
-    cv2.imshow('dst_FM', dst_FM)
-    cv2.imshow('dst_FM_RANSAC', dst_FM_RANSAC)
+    cv2.imshow('dst_FM', dst_FM/255.)
+    cv2.imshow('dst_FM_RANSAC', dst_FM_RANSAC/255.)
 
     cv2.waitKey()
 
