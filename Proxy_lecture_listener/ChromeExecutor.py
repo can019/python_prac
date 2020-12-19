@@ -10,8 +10,10 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dateutil.parser import parse
 import Capture
 import time
+
 """ ------------------------------------------------------------------------"""
 
 
@@ -39,8 +41,9 @@ def auto_alert_accept(driver: webdriver):
         assert e.__class__.__name__ == 'NameError'
         return False
 
+# This function will become a method of ChromeExecutor
 def make_task_link_list(driver: webdriver, tr):
-    link_list = []
+    task_list = {}
     for i in range (len(tr)):
         td = tr[i].find_elements_by_tag_name('td')
         content_type = str(td[2].text)
@@ -48,9 +51,40 @@ def make_task_link_list(driver: webdriver, tr):
             print("!")
         else:
             print("??")
-        td[6].click()
-
+        # td[6].click()
+        temp_deadline = get_deadline_as_datetime(str(td[4].text), 'split mode')
+        print(type(temp_deadline))
+        # task_list[i] = temp_deadline
         # link_list.append()
+
+# This function will become a method of ChromeExecutor
+def get_deadline_as_datetime(deadline: str, split_mode ='default'):
+    """ Change str to datetime
+        Example:
+            ====================================================
+            test1 = get_deadline_as_datetime('2020/12/23 23:59')
+            test2 = get_deadline_as_datetime('2020/12/08 00:00
+                                    ~2021/01/01 23:59')
+            print(test1)
+            print(test2)
+            print(type(test1))
+            -----------
+            2020-12-23 23:59:00
+            2021-01-01 23:59:00
+            <class 'datetime.datetime'>
+            ====================================================
+    """
+    if split_mode == 'split mode':
+        """
+            When there is ~ in str.
+            This mean str is start time ~ end time.
+            Split input str to get end time.
+        """
+        char_range_index = deadline.find('~')
+        deadline = deadline[char_range_index+1:]
+    dst = parse(deadline)
+    return dst
+
 
 """ --------------------------------------------------------------------------"""
 
