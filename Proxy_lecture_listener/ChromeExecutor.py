@@ -6,7 +6,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoAlertPresentException
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -16,7 +16,7 @@ import time
 
 """ ------------------------------------------------------------------------"""
 
-
+from selenium.common.exceptions import NoAlertPresentException
 """ ------------------------------ Method area ------------------------------"""
 # This function will become a method of ChromeExecutor
 def auto_alert_accept(driver: webdriver):
@@ -31,9 +31,12 @@ def auto_alert_accept(driver: webdriver):
         result.accept()
         return True
 
-    except NoAlertPresentException:
+    except NoAlertPresentException as e:
         """ There was no js-alert"""
         print("There is no js-alert")
+        print(e.__class__.__name__)
+        print(e)
+        driver.refresh()
         return False
     except Exception as e:
         """ Unexpected exception"""
@@ -98,45 +101,49 @@ class ChromExecutor:
     driver = None
     capture = None
     wait = None
+    id = None
+    pw = None
 
-    def __init__(self):
+    def __init__(self, id:str, pw:str):
         self.options = Options()
         self.options.add_argument('--start-fullscreen')  # 전체화면(f11 적용)
         self.capture = Capture.Capture()
+        self.id = id
+        self.pw = pw
 
     def run(self):
         self.driver = webdriver.Chrome('./chromedriver_win32/chromedriver.exe')  # ,chrome_options=self.options)
         self.driver.implicitly_wait(2)
-        # self.driver.get('https://e-learning.cnu.ac.kr/main/MainView.dunet')  # Alert Test
-        self.driver.get('https://e-learning.cnu.ac.kr/lms/myLecture/doListView.dunet')
+        self.driver.get('https://e-learning.cnu.ac.kr/main/MainView.dunet')  # Alert Test
+        #self.driver.get('https://e-learning.cnu.ac.kr/lms/myLecture/doListView.dunet')
         print(auto_alert_accept(self.driver))
 
-        self.driver.implicitly_wait(2)
-        wait = WebDriverWait(self.driver, 10)
-        """ ------------------------------ Auto login ------------------------------"""
-        """ Use html elements by id and class
-            There was problem in synchronizing, so it didn't sperated as function.
-        """
-        wait.until(EC.presence_of_element_located((By.ID, 'pop_login')))
-        element = self.driver.find_element_by_id("pop_login").send_keys(Keys.ENTER)
-        element = self.driver.find_element_by_class_name("input_id")
-        element.send_keys("201602068")  # id
-        element = self.driver.find_element_by_class_name("input_pw")
-        element.send_keys("19970101")  # pw
-        element.send_keys(Keys.ENTER)
-        """ ------------------------------------------------------------------------"""
-        """ 마이페이지 이동 """
-        # Try to find element by class name, and relative xpath, but failed so use abs xpath.
-        wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'login_after')))  # wait page loading
-        self.driver.find_element_by_xpath('/html/body/div[2]/div[1]/div[2]/div/ul/li[1]/a').click()
-
-        # wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'list mg_t5 fs_s')))  # wait page loading
-
-        if self.driver.find_element_by_id('layer_view_popup') is not None:
-            tr = self.driver.find_elements_by_xpath('//*[@id="myTable"]/tbody/tr')
-            aa = tr[0].find_elements_by_tag_name('td')
-            make_task_link_list(self.driver, tr)
-
-
-        time.sleep(3)
-        print("종료")
+        # self.driver.implicitly_wait(2)
+        # wait = WebDriverWait(self.driver, 10)
+        # """ ------------------------------ Auto login ------------------------------"""
+        # """ Use html elements by id and class
+        #     There was problem in synchronizing, so it didn't sperated as function.
+        # """
+        # wait.until(EC.presence_of_element_located((By.ID, 'pop_login')))
+        # element = self.driver.find_element_by_id("pop_login").send_keys(Keys.ENTER)
+        # element = self.driver.find_element_by_class_name("input_id")
+        # element.send_keys(self.id)  # id
+        # element = self.driver.find_element_by_class_name("input_pw")
+        # element.send_keys(self.pw)  # pw
+        # element.send_keys(Keys.ENTER)
+        # """ ------------------------------------------------------------------------"""
+        # """ 마이페이지 이동 """
+        # # Try to find element by class name, and relative xpath, but failed so use abs xpath.
+        # wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'login_after')))  # wait page loading
+        # self.driver.find_element_by_xpath('/html/body/div[2]/div[1]/div[2]/div/ul/li[1]/a').click()
+        #
+        # # wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'list mg_t5 fs_s')))  # wait page loading
+        #
+        # if self.driver.find_element_by_id('layer_view_popup') is not None:
+        #     tr = self.driver.find_elements_by_xpath('//*[@id="myTable"]/tbody/tr')
+        #     aa = tr[0].find_elements_by_tag_name('td')
+        #     make_task_link_list(self.driver, tr)
+        #
+        #
+        # time.sleep(3)
+        # print("종료")
